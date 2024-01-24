@@ -40,7 +40,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROBABLE_PALM_TREE_TOKEN }}
           repository: vovaspace/probable-palm-tree
           event-type: external_release
           client-payload: '{"tag_name": "${{ steps.release.outputs.tag_name }}", "asset_name": "${{ env.ASSET_NAME }}"}'
