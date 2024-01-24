@@ -28,14 +28,13 @@ jobs:
           release-type: node
           package-name: ${{ steps.package.outputs.name }}
           changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"perf","section":"Performance Improvements","hidden":false}]'
-      - name: ZIP Build
-        if: ${{ steps.release.outputs.release_created }}
-        run: zip -r $ASSET_NAME.zip build
       - name: Release Artifact Upload
         if: ${{ steps.release.outputs.release_created }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ steps.release.outputs.tag_name }} $ASSET_NAME.zip
+        run: |
+          zip -r $ASSET_NAME.zip build
+          gh release upload ${{ steps.release.outputs.tag_name }} $ASSET_NAME.zip
       - name: Release Event Dispatch
         if: ${{ steps.release.outputs.release_created }}
         uses: peter-evans/repository-dispatch@v2
@@ -43,4 +42,5 @@ jobs:
           token: ${{ secrets.PROBABLE_PALM_TREE_TOKEN }}
           repository: vovaspace/probable-palm-tree
           event-type: external_release
-          client-payload: '{"tag_name": "${{ steps.release.outputs.tag_name }}", "asset_name": "${{ env.ASSET_NAME }}"}'
+          client-payload: |
+            {"tag_name": "${{ steps.release.outputs.tag_name }}", "asset_name": "${{ env.ASSET_NAME }}", "repository": "${{ github.repository }}"}
