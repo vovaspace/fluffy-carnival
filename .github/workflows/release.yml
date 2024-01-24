@@ -26,9 +26,11 @@ jobs:
           release-type: node
           package-name: ${{ steps.package.outputs.name }}
           changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"perf","section":"Performance Improvements","hidden":false}]'
+      - name: ZIP Build
+        if: ${{ steps.release.outputs.release_created }}
+        run: zip -r build.zip build
       - name: Upload Release Artifact
         if: ${{ steps.release.outputs.release_created }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ steps.release.outputs.tag_name }} build
-
+        run: gh release upload ${{ steps.release.outputs.tag_name }} build.zip
