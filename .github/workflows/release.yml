@@ -10,6 +10,8 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    env:
+      ASSET_NAME: build
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -28,9 +30,16 @@ jobs:
           changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"perf","section":"Performance Improvements","hidden":false}]'
       - name: ZIP Build
         if: ${{ steps.release.outputs.release_created }}
-        run: zip -r build.zip build
-      - name: Upload Release Artifact
+        run: zip -r $ASSET_NAME.zip build
+      - name: Release Artifact Upload
         if: ${{ steps.release.outputs.release_created }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ steps.release.outputs.tag_name }} build.zip
+        run: gh release upload ${{ steps.release.outputs.tag_name }} $ASSET_NAME.zip
+      - name: Release Event Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: vovaspace/probable-palm-tree
+          event-type: external_release
+          client-payload: '{"tag_name": "${{ steps.release.outputs.tag_name }}", "asset_name": "${{ env.ASSET_NAME }}"}'
