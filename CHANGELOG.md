@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/vovaspace/fluffy-carnival/compare/v1.0.4...v1.0.5) (2024-01-24)
+
+
+### Bug Fixes
+
+* content ([b5180a4](https://github.com/vovaspace/fluffy-carnival/commit/b5180a44341d71023b3a8834cf473e42d6b67d62))
+
 ## [1.0.4](https://github.com/vovaspace/fluffy-carnival/compare/v1.0.3...v1.0.4) (2024-01-24)
 
 
