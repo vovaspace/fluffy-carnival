@@ -1,0 +1,11 @@
+{
+  "name": "fluffy-carnival",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf build && mkdir build && cp source/content.txt build/content.txt"
+  },
+  "author": "Vladimir Lewandowski <me@vovaspace.com> (https://vovaspace.com/)",
+  "license": "ISC"
+}
