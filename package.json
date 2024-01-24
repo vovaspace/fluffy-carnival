@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf build && mkdir build && cp source/content.txt build/content.txt"
+    "build": "rm -rf build && mkdir build && cp -r source/. build"
   },
   "author": "Vladimir Lewandowski <me@vovaspace.com> (https://vovaspace.com/)",
   "license": "ISC"
